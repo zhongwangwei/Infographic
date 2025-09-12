@@ -1,16 +1,120 @@
-import type { JSXElement, TextProps } from '../types';
+import type { GroupProps, JSXElement, RectProps, TextProps } from '../types';
+
+const TEXT_ANCHOR_MAP = {
+  center: 'middle',
+  right: 'end',
+  left: 'start',
+} as const;
+
+const DOMINANT_BASELINE_MAP = {
+  center: 'central',
+  bottom: 'text-after-edge',
+  top: 'hanging',
+} as const;
 
 export function Text(props: TextProps): JSXElement {
-  const { x = 0, y = 0, width = 0, height = 0 } = props;
-  const node: JSXElement = {
-    type: 'text',
+  const {
+    id,
+    x = 0,
+    y = 0,
+    width = 0,
+    height = 0,
+    alignHorizontal = 'left',
+    alignVertical = 'top',
+    children,
+    fontSize = 14,
+    fontFamily,
+    fontStyle,
+    fontWeight,
+    textDecoration,
+    letterSpacing,
+    wordSpacing,
+    opacity,
+    fill = 'black',
+    lineHeight,
+    wordWrap,
+    backgroundColor = 'none',
+    ...restProps
+  } = props;
+
+  const dataAttrs = Object.entries({
+    ...(alignHorizontal !== 'left' && {
+      'data-align-horizontal': alignHorizontal,
+    }),
+    ...(alignVertical !== 'top' && { 'data-align-vertical': alignVertical }),
+    ...(lineHeight !== undefined && { 'data-line-height': lineHeight }),
+    ...(wordWrap !== undefined && { 'data-word-wrap': wordWrap }),
+    ...(width !== undefined && { 'data-width': width }),
+    ...(height !== undefined && { 'data-height': height }),
+  }).reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+
+  const textX =
+    alignHorizontal === 'center'
+      ? x + width / 2
+      : alignHorizontal === 'right'
+        ? x + width
+        : x;
+
+  const textY =
+    alignVertical === 'center'
+      ? y + height / 2
+      : alignVertical === 'bottom'
+        ? y + height
+        : y;
+
+  const textProps: Record<string, any> = {
+    ...(textX && { x: textX }),
+    ...(textY && { y: textY }),
+    fill,
+    fontSize,
+    textAnchor: TEXT_ANCHOR_MAP[alignHorizontal],
+    dominantBaseline: DOMINANT_BASELINE_MAP[alignVertical],
+    'data-text-alignment': `${alignHorizontal.toUpperCase()} ${alignVertical.toUpperCase()}`,
+    children,
+    ...dataAttrs,
+    ...restProps,
+    ...(id && { id: `${id}-text` }),
+    ...(fontFamily && { fontFamily }),
+    ...(fontStyle && { fontStyle }),
+    ...(fontWeight && { fontWeight }),
+    ...(textDecoration && textDecoration !== 'none' && { textDecoration }),
+    ...(letterSpacing && { letterSpacing }),
+    ...(wordSpacing && { wordSpacing }),
+    ...(opacity !== undefined && opacity !== 1 && { opacity }),
+  };
+
+  const bounds = {
+    ...(x && { x }),
+    ...(y && { y }),
+    ...(width && { width }),
+    ...(height && { height }),
+  };
+
+  const containerProps: GroupProps = {
+    ...bounds,
+    ...(id && { id }),
+  };
+
+  const rectProps: RectProps = {
+    ...bounds,
+    fill: backgroundColor,
+    ...(id && { id: `${id}-bounds` }),
+  };
+
+  return {
+    type: 'g',
     props: {
-      x,
-      y,
-      width,
-      height,
-      ...props,
+      ...containerProps,
+      children: [
+        {
+          type: 'rect',
+          props: rectProps,
+        },
+        {
+          type: 'text',
+          props: textProps,
+        },
+      ],
     },
   };
-  return node;
 }

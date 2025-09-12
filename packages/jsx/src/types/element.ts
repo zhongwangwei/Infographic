@@ -24,10 +24,11 @@ export interface GroupProps extends BaseGeometryProps {
 export interface RectProps extends BaseGeometryProps {}
 export interface EllipseProps extends BaseGeometryProps {}
 export interface TextProps extends BaseGeometryProps {
-  lineHeight?: { unit: string; value: number };
+  lineHeight?: number;
   wordWrap?: boolean;
   alignHorizontal?: 'left' | 'center' | 'right';
-  alignVertical?: 'top' | 'middle' | 'bottom';
+  alignVertical?: 'top' | 'center' | 'bottom';
+  backgroundColor?: string;
   children?: string | number;
 }
 export interface PathProps extends BaseGeometryProps {}
