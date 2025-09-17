@@ -1,5 +1,5 @@
 /** @jsxImportSource @antv/infographic-jsx */
-import { getElementBounds, Group } from '@antv/infographic-jsx';
+import { ComponentType, getElementBounds, Group } from '@antv/infographic-jsx';
 import { ItemDesc, ItemIcon, ItemLabel } from '../components';
 import { FlexLayout } from '../layouts';
 import type { BaseItemProps } from './types';
@@ -12,7 +12,7 @@ export interface SimpleItemProps extends BaseItemProps {
   positionV?: 'normal' | 'center' | 'flipped';
 }
 
-export const SimpleItem = (props: SimpleItemProps) => {
+export const SimpleItem: ComponentType<SimpleItemProps> = (props) => {
   const {
     indexKey,
     datum,

@@ -1,5 +1,5 @@
 /** @jsxImportSource @antv/infographic-jsx */
-import { Group, Path } from '@antv/infographic-jsx';
+import { ComponentType, Group, Path } from '@antv/infographic-jsx';
 import { ItemDesc } from '../components';
 import type { BaseItemProps } from './types';
 
@@ -10,7 +10,7 @@ export interface DoneListProps extends BaseItemProps {
   gap?: number;
 }
 
-export const DoneList = (props: DoneListProps) => {
+export const DoneList: ComponentType<DoneListProps> = (props) => {
   const {
     indexKey,
     datum,

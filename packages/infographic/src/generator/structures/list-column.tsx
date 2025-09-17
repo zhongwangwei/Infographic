@@ -1,5 +1,5 @@
 /** @jsxImportSource @antv/infographic-jsx */
-import type { JSXElement } from '@antv/infographic-jsx';
+import type { ComponentType, JSXElement } from '@antv/infographic-jsx';
 import { getElementBounds, Group } from '@antv/infographic-jsx';
 import { BtnAdd, BtnRemove, BtnsGroup, ItemsGroup } from '../components';
 import { FlexLayout } from '../layouts';
@@ -9,7 +9,7 @@ export interface ListColumnProps extends BaseTemplateProps {
   gap?: number;
 }
 
-export const ListColumn = (props: ListColumnProps) => {
+export const ListColumn: ComponentType<ListColumnProps> = (props) => {
   const { Title, Item, data, gap = 20, design } = props;
   const { title, desc, items = [] } = data;
 
