@@ -3,7 +3,7 @@ import type { Data } from '../../types';
 import { TitleProps } from '../components';
 import type { BaseItemProps } from '../items';
 
-export interface BaseTemplateProps {
+export interface BaseStructureProps {
   Title?: ComponentType<Pick<TitleProps, 'title' | 'desc'>>;
   Item: ComponentType<BaseItemProps>;
   data: Data;
@@ -14,7 +14,7 @@ export interface BaseTemplateProps {
 }
 
 export interface StructureRegistration<
-  T extends BaseTemplateProps = BaseTemplateProps,
+  T extends BaseStructureProps = BaseStructureProps,
 > {
   type: string;
   component: ComponentType<T>;

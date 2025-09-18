@@ -3,9 +3,9 @@ import type { ComponentType, JSXElement } from '@antv/infographic-jsx';
 import { getElementBounds, Group } from '@antv/infographic-jsx';
 import { BtnAdd, BtnRemove, BtnsGroup, ItemsGroup } from '../components';
 import { FlexLayout } from '../layouts';
-import type { BaseTemplateProps } from './types';
+import type { BaseStructureProps } from './types';
 
-export interface ListColumnProps extends BaseTemplateProps {
+export interface ListColumnProps extends BaseStructureProps {
   gap?: number;
 }
 
