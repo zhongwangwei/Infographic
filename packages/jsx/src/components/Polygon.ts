@@ -9,7 +9,7 @@ export function Polygon({
   points = [],
   ...props
 }: PolygonProps): JSXElement {
-  const pointsStr = points.map(([x, y]) => `${x},${y}`).join(' ');
+  const pointsStr = points.map(({ x, y }) => `${x},${y}`).join(' ');
 
   const node: JSXElement = {
     type: 'polygon',
