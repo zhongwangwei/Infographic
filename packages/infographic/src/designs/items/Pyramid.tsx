@@ -11,9 +11,9 @@ import {
 import roundPolygon, { getSegments } from 'round-polygon';
 import tinycolor from 'tinycolor2';
 import { ItemDesc, ItemIcon, ItemLabel } from '../components';
+import { getItemId, getItemProps } from '../utils';
 import { registerItem } from './registry';
 import type { BaseItemProps } from './types';
-import { getItemId, getItemProps } from './utils';
 
 export interface PyramidProps extends BaseItemProps {
   gap?: number;
@@ -111,7 +111,7 @@ export const Pyramid: ComponentType<PyramidProps> = (props) => {
         id={getItemId(indexes, 'shapes-group')}
       >
         <Rect
-          id={getItemId(indexes, 'static-background')}
+          id={getItemId(indexes, 'static', 'background')}
           x={backgroundX}
           width={backgroundWidth}
           y={backgroundY}
@@ -120,7 +120,7 @@ export const Pyramid: ComponentType<PyramidProps> = (props) => {
           fill={themeColors.colorPrimaryBg}
         />
         <Polygon
-          id={getItemId(indexes, 'static-pyramid')}
+          id={getItemId(indexes, 'static', 'pyramid')}
           points={segments}
           fill={`url(#${pyramidColorId})`}
         />

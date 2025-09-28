@@ -1,8 +1,15 @@
 import { getItemKeyFromIndexes } from '../../utils';
-import type { BaseItemProps } from './types';
+import type { BaseItemProps } from '../items/types';
+import { BaseStructureProps } from '../structures';
 
-export function getItemId(indexes: number[], appendix: string) {
-  return `item-${getItemKeyFromIndexes(indexes)}-${appendix}`;
+export function getItemId(
+  indexes: number[],
+  type: 'static' | 'shape' | 'def' | 'shapes-group',
+  appendix?: string,
+) {
+  return `item-${getItemKeyFromIndexes(indexes)}-${type}` + appendix
+    ? `-${appendix}`
+    : '';
 }
 
 /**
@@ -44,4 +51,16 @@ export function getItemProps<T extends BaseItemProps>(
   });
 
   return [extProps, restProps] as const;
+}
+
+/**
+ * 针对层级结构，获取当前层级对应的组件
+ */
+export function getItemComponent(
+  Items: BaseStructureProps['Items'],
+  level?: number,
+) {
+  if (Items.length === 0) return () => null;
+  if (level === undefined) return Items[0];
+  return Items[level] ?? Items[0];
 }

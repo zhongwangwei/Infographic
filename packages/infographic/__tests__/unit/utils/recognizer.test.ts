@@ -74,7 +74,6 @@ describe('recognizer', () => {
   describe('isText', () => {
     it('should recognize text elements by tag name', () => {
       const textElement = createMockElement('any-id', 'text');
-      Object.setPrototypeOf(textElement, SVGTextElement.prototype);
 
       expect(isText(textElement)).toBe(true);
       expect(isText(createMockElement('any-id', 'g'))).toBe(false);

@@ -11,9 +11,9 @@ import tinycolor from 'tinycolor2';
 import type { Padding } from '../../types';
 import { parsePadding } from '../../utils';
 import { ItemLabel, ItemValue } from '../components';
+import { getItemProps } from '../utils';
 import { registerItem } from './registry';
 import type { BaseItemProps } from './types';
-import { getItemProps } from './utils';
 
 export interface ChartColumnProps extends BaseItemProps {
   padding?: Padding;

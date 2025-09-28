@@ -2,9 +2,9 @@
 import type { ComponentType } from '@antv/infographic-jsx';
 import { Defs, Ellipse, Group } from '@antv/infographic-jsx';
 import { ItemLabel } from '../components';
+import { getItemProps } from '../utils';
 import { registerItem } from './registry';
 import type { BaseItemProps } from './types';
-import { getItemProps } from './utils';
 
 export interface CircleNodeProps extends BaseItemProps {
   width?: number;
@@ -59,7 +59,7 @@ export const CircleNode: ComponentType<CircleNodeProps> = (props) => {
         height={labelSize}
         alignHorizontal="center"
         alignVertical="center"
-        fill={themeColors.colorPrimary}
+        fill={themeColors.colorPrimaryText}
       >
         {datum.label}
       </ItemLabel>

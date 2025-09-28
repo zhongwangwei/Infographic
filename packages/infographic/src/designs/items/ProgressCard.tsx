@@ -9,9 +9,9 @@ import {
 import { scaleLinear } from 'd3';
 import tinycolor from 'tinycolor2';
 import { ItemDesc, ItemIcon, ItemLabel, ItemValue } from '../components';
+import { getItemProps } from '../utils';
 import { registerItem } from './registry';
 import type { BaseItemProps } from './types';
-import { getItemProps } from './utils';
 
 export interface ProgressCardProps extends BaseItemProps {
   width?: number;

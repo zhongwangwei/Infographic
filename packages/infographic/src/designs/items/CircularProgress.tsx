@@ -1,9 +1,9 @@
 /** @jsxImportSource @antv/infographic-jsx */
 import { ComponentType, Ellipse, Group, Text } from '@antv/infographic-jsx';
 import { ItemLabel } from '../components';
+import { getItemProps } from '../utils';
 import { registerItem } from './registry';
 import type { BaseItemProps } from './types';
-import { getItemProps } from './utils';
 
 export interface CircularProgressProps extends BaseItemProps {
   size?: number;
@@ -29,15 +29,17 @@ export const CircularProgress: ComponentType<CircularProgressProps> = (
   const strokeDashoffset = circumference * (1 - percentage);
 
   const center = size / 2;
+  const start = strokeWidth / 2;
+  const d = size - strokeWidth;
 
   return (
     <Group {...restProps}>
       {/* 完整圆环背景轨道 - 表示100% */}
       <Ellipse
-        x={strokeWidth / 2}
-        y={strokeWidth / 2}
-        width={size - strokeWidth}
-        height={size - strokeWidth}
+        x={start}
+        y={start}
+        width={d}
+        height={d}
         fill="none"
         stroke="#f0f0f0"
         strokeWidth={strokeWidth}
@@ -45,10 +47,10 @@ export const CircularProgress: ComponentType<CircularProgressProps> = (
 
       {/* 进度圆环 */}
       <Ellipse
-        x={strokeWidth / 2}
-        y={strokeWidth / 2}
-        width={size - strokeWidth}
-        height={size - strokeWidth}
+        x={start}
+        y={start}
+        width={d}
+        height={d}
         fill="none"
         stroke={themeColors.colorPrimary}
         strokeWidth={strokeWidth}
@@ -60,11 +62,13 @@ export const CircularProgress: ComponentType<CircularProgressProps> = (
 
       {/* 中心数值 */}
       <Text
-        x={center}
-        y={center - 4}
+        x={start}
+        y={start}
+        width={d}
+        height={d}
         fontSize={24}
         fontWeight="bold"
-        fill={themeColors.colorText}
+        fill={themeColors.colorPrimary}
         alignHorizontal="center"
         alignVertical="center"
       >

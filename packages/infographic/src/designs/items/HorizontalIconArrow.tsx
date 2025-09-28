@@ -12,9 +12,9 @@ import {
 import { Gap, ItemDesc, ItemIconCircle, ItemLabel } from '../components';
 import { FlexLayout } from '../layouts';
 import { AlignLayout } from '../layouts/Align';
+import { getItemProps } from '../utils';
 import { registerItem } from './registry';
 import type { BaseItemProps } from './types';
-import { getItemProps } from './utils';
 
 export interface HorizontalIconArrowProps extends BaseItemProps {
   width?: number;

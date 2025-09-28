@@ -1,20 +1,20 @@
-import type { ParsedTemplateOptions, TemplateOptions } from '../designs';
+import { DesignOptions, ParsedDesignsOptions } from '../designs';
 import { ThemeConfig } from '../themes';
 import type { Data, Padding } from '../types';
 
 export interface InfographicOptions {
   /** 容器，可以是选择器或者 HTMLElement */
-  container: string | HTMLElement;
+  container?: string | HTMLElement;
   /** 宽度 */
-  width: number;
+  width?: number;
   /** 高度 */
-  height: number;
+  height?: number;
   /** 容器内边距 */
   padding?: Padding;
   /** 模板 */
   template?: string;
   /** 设计 */
-  design?: TemplateOptions;
+  design?: DesignOptions;
   /** 数据 */
   data: Data;
   /** 主题 */
@@ -25,12 +25,12 @@ export interface InfographicOptions {
 
 export interface ParsedInfographicOptions {
   container: HTMLElement;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   padding?: Padding;
   viewBox?: string;
   template?: string;
-  design: ParsedTemplateOptions;
+  design: ParsedDesignsOptions;
   data: Data;
   theme?: string;
   themeConfig: ThemeConfig;

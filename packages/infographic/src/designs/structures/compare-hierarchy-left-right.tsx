@@ -63,7 +63,13 @@ export const CompareHierarchyLeftRight: ComponentType<
       themeColors={{} as any}
     />
   );
-  const itemContent = <Item indexes={[0]} data={data} datum={items[0]} />;
+  const itemContent = (
+    <Item
+      indexes={[0, 0]}
+      data={data}
+      datum={items[0]?.children?.[0] || items[2]}
+    />
+  );
 
   const rootItemBounds = getElementBounds(rootItemContent);
   const itemBounds = getElementBounds(itemContent);
@@ -86,26 +92,30 @@ export const CompareHierarchyLeftRight: ComponentType<
   const leftRootX = itemBounds.width + decorationWidth;
   const rightRootX = leftRootX + rootItemBounds.width + spacing;
   const rootY = (totalHeight - rootItemBounds.height) / 2;
-  itemElements.push(
-    <RootItem
-      indexes={[0]}
-      x={leftRootX}
-      y={rootY}
-      data={data}
-      datum={leftRoot}
-      positionH={flipRoot ? 'normal' : 'flipped'}
-    />,
-  );
-  itemElements.push(
-    <RootItem
-      indexes={[1]}
-      x={rightRootX}
-      y={rootY}
-      data={data}
-      datum={rightRoot}
-      positionH={flipRoot ? 'flipped' : 'normal'}
-    />,
-  );
+  if (leftRoot) {
+    itemElements.push(
+      <RootItem
+        indexes={[0]}
+        x={leftRootX}
+        y={rootY}
+        data={data}
+        datum={leftRoot}
+        positionH={flipRoot ? 'normal' : 'flipped'}
+      />,
+    );
+  }
+  if (rightRoot) {
+    itemElements.push(
+      <RootItem
+        indexes={[1]}
+        x={rightRootX}
+        y={rootY}
+        data={data}
+        datum={rightRoot}
+        positionH={flipRoot ? 'flipped' : 'normal'}
+      />,
+    );
+  }
 
   const addDecoElement = (side: 'left' | 'right', pos: [number, number]) => {
     if (decoration === 'none') return;
