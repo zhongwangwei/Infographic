@@ -34,7 +34,9 @@ export const Preview = () => {
             value={template}
             style={{ width: 200 }}
             options={templates.map((value) => ({ label: value, value }))}
-            onChange={(value) => setTemplate(value)}
+            onChange={(value) => {
+              setTemplate(value);
+            }}
           />
         </Form.Item>
         <Form.Item label="数据">
