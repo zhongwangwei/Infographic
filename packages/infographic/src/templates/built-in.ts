@@ -542,6 +542,13 @@ const BUILT_IN_TEMPLATES: Record<string, TemplateOptions> = {
       items: [{ type: 'underline-text' }],
     },
   },
+  'sequence-circle-arrows-indexed-card': {
+    design: {
+      title: 'default',
+      structure: { type: 'sequence-circle-arrows' },
+      items: [{ type: 'indexed-card' }],
+    },
+  },
 };
 
 Object.entries(BUILT_IN_TEMPLATES).forEach(([name, options]) => {

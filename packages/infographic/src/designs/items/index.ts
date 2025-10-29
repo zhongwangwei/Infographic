@@ -9,6 +9,7 @@ export * from './DoneList';
 export * from './HorizontalIconArrow';
 export * from './HorizontalIconLine';
 export * from './IconBadge';
+export * from './IndexedCard';
 export * from './LCornerCard';
 export * from './LetterCard';
 export * from './PillBadge';
