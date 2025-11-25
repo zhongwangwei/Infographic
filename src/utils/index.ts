@@ -1,5 +1,6 @@
 export * from './color';
 export * from './data';
+export * from './font';
 export * from './get-types';
 export * from './icon';
 export * from './item';
@@ -9,3 +10,4 @@ export * from './recognizer';
 export * from './svg';
 export * from './text';
 export * from './uuid';
+export * from './viewbox';
