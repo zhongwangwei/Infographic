@@ -1,6 +1,15 @@
-# 信息图数据项生成 Agent 提示词
+# 信息图数据项组件生成规范
 
-你是一个专业的信息图数据项组件生成专家。你的任务是根据用户需求，生成符合框架规范的数据项组件代码。
+本文件用于指导生成符合框架规范的 Item 组件代码。
+
+## 目录
+- 数据项核心概念
+- 数据项设计理念
+- 技术规范
+- 代码生成要求
+- 生成流程
+- 输出格式
+- 常见问题和最佳实践
 
 ## 数据项核心概念
 
@@ -102,7 +111,7 @@ export interface ThemeColors {
 
 - **Ellipse**: 椭圆/圆形
 
-> 其余属性与 React SVG circle 一致
+> 其余属性与 React SVG ellipse 一致，但坐标使用 `x/y/width/height`，不使用 `cx/cy/rx/ry`
 
 - **重要**: `x`, `y` 为椭圆的左上角位置，不是圆心坐标
 
@@ -137,7 +146,7 @@ export interface ThemeColors {
 - **Text**: 文本
 
   ```typescript
-  <Text x={0} y={0} fontSize={14} fill={color}>
+  <Text x={0} y={0} width={100} height={20} fontSize={14} fill={color}>
     内容
   </Text>
   ```
@@ -391,9 +400,9 @@ import { getItemProps } from './utils';
 // import roundPolygon, { xxx } from 'round-polygon';
 ```
 
-### 6. values 字段规则
+### 6. composites 字段规则
 
-在 `registerItem` 时，需要传入 `values` 字段，表示当前组件使用了哪些封装组件。`values` 的值基于代码实现中使用的组件来确定：
+在 `registerItem` 时，需要传入 `composites` 字段，表示当前组件使用了哪些封装组件。`composites` 的值基于代码实现中使用的组件来确定：
 
 - **ItemLabel** → `"label"`
 - **ItemDesc** → `"desc"`
@@ -407,19 +416,19 @@ import { getItemProps } from './utils';
 // 如果组件使用了 ItemLabel 和 ItemDesc
 registerItem('simple-text', {
   component: SimpleText,
-  values: ['label', 'desc'],
+  composites: ['label', 'desc'],
 });
 
 // 如果组件使用了 ItemIcon, ItemLabel, ItemValue 和 ItemDesc
 registerItem('full-card', {
   component: FullCard,
-  values: ['icon', 'label', 'value', 'desc'],
+  composites: ['icon', 'label', 'value', 'desc'],
 });
 
 // 如果组件使用了 Illus, ItemLabel 和 ItemDesc
 registerItem('illus-item', {
   component: IllusItem,
-  values: ['illus', 'label', 'desc'],
+  composites: ['illus', 'label', 'desc'],
 });
 ```
 
@@ -510,7 +519,7 @@ export const [ItemName]: ComponentType<[ItemName]Props> = (props) => {
 
 registerItem('[item-name]', {
   component: [ItemName],
-  values: ['label', 'desc', 'icon', 'value', 'illus'] // 根据组件实际使用的组件来确定
+  composites: ['label', 'desc', 'icon', 'value', 'illus'] // 根据组件实际使用的组件来确定
 });
 ```
 
@@ -755,7 +764,7 @@ const quarterCirclePath = isFlipped
 6. **支持 positionH/V 对齐方式**（根据设计需求）
 7. **避免出现元素坐标为负值的情况**
 8. **条件渲染可选元素**（icon、label、desc、value）
-9. **注册组件时必须提供 values 字段**，根据实际使用的封装组件确定值
+9. **注册组件时必须提供 composites 字段**，根据实际使用的封装组件确定值
 
 ### 11. 命名规范
 
@@ -896,5 +905,3 @@ const radius = (size - strokeWidth) / 2;
 const circumference = 2 * Math.PI * radius;
 const strokeDashoffset = circumference * (1 - percentage);
 ```
-
-现在，请告诉我你想要生成什么类型的数据项组件？
