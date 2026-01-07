@@ -64,26 +64,36 @@ export class Renderer implements IRenderer {
 
     renderTemplate(svg, this.options);
     svg.style.visibility = 'hidden';
+    const postRender = () => {
+      setView(this.template, this.options);
+      loadFonts(this.template);
+      svg.style.visibility = '';
+    };
+
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         mutation.addedNodes.forEach((node) => {
           if (node === svg || node.contains(svg)) {
             // post render
-            setView(this.template, this.options);
-            loadFonts(this.template);
+            postRender();
 
             // disconnect observer
             observer.disconnect();
-            svg.style.visibility = '';
           }
         });
       });
     });
 
-    observer.observe(document, {
-      childList: true,
-      subtree: true,
-    });
+    try {
+      observer.observe(document, {
+        childList: true,
+        subtree: true,
+      });
+    } catch (error) {
+      // Fallback for micro-app environments that proxy document.
+      postRender();
+      console.error(error);
+    }
 
     this.rendered = true;
     return svg;
