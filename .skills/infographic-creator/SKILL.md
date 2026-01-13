@@ -45,7 +45,9 @@ theme
 - Key-value pairs are expressed as "key value", and arrays are expressed as "-" items
 - The icon value is provided directly with keywords or icon names (such as `mdi/chart-line`)
 - `data` should contain title/desc/items (which can be omitted according to semantics)
-- `data.items` should contain label(string)/value(number)/desc(string)/icon(string)/children(object), where children represents the hierarchical structure
+- `data` can include `relations`/`illus`/`attributes` for graph links, illustrations, and extended fields
+- `data.items` should contain id(string)/label(string)/value(number)/desc(string)/icon(string)/illus(string)/group(string)/children(object), where children represents the hierarchical structure
+- `data.relations` describes graph edges with `from`/`to` plus optional `id`/`label`/`direction`/`showArrow`/`arrowType`; mermaid-style `A -> B` is supported when generating relation graphs
 - For comparison templates (template names starting with `compare-`), construct exactly two root nodes and place every comparison item under them as children to keep the hierarchy clear
 - For `hierarchy-structure`, `data.items` renders top-to-bottom (first item at the top) and supports up to 3 levels (root -> group -> item)
 - `theme` field is for customizing the theme of the infographic, including palette, font, etc.
@@ -97,16 +99,36 @@ interface Data {
   title?: string;
   desc?: string;
   items: ItemDatum[];
+  relations?: RelationDatum[];
+  illus?: Record<string, string | ResourceConfig>;
+  attributes?: Record<string, object>;
   [key: string]: any;
 }
 
-interface ItemDatum {
-  icon?: string;
+interface BaseDatum {
+  id?: string;
+  icon?: string | ResourceConfig;
   label?: string;
   desc?: string;
   value?: number;
-  illus?: string;
+  attributes?: Record<string, object>;
+  [key: string]: any;
+}
+
+interface ItemDatum extends BaseDatum {
+  illus?: string | ResourceConfig;
   children?: ItemDatum[];
+  group?: string;
+  [key: string]: any;
+}
+
+interface RelationDatum extends BaseDatum {
+  from: string;
+  to: string;
+  label?: string;
+  direction?: 'forward' | 'both' | 'none';
+  showArrow?: boolean;
+  arrowType?: 'arrow' | 'triangle' | 'diamond';
   [key: string]: any;
 }
 ```
@@ -201,6 +223,10 @@ interface ItemDatum {
 - list-zigzag-down-simple
 - list-zigzag-up-compact-card
 - list-zigzag-up-simple
+- relation-dagre-flow-tb-simple-circle-node
+- relation-dagre-flow-tb-animated-simple-circle-node
+- relation-dagre-flow-tb-badge-card
+- relation-dagre-flow-tb-animated-badge-card
 
 **Template Selection Guidelines:**
 - For strict sequential order: processes/steps/development trends → `sequence-*` series

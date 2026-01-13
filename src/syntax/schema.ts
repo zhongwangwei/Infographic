@@ -38,12 +38,27 @@ const shapeStyleSchema = object(nullableColorFields, { allowUnknown: true });
 
 const itemDatumSchema: ObjectSchema = object({}, { allowUnknown: true });
 itemDatumSchema.fields = {
+  id: string(),
   label: string(),
   value: union(number(), string()),
   desc: string(),
   icon: string(),
+  group: string(),
   children: array(itemDatumSchema),
 };
+
+export const RelationSchema: ObjectSchema = object(
+  {
+    id: string(),
+    from: string(),
+    to: string(),
+    label: string(),
+    direction: enumOf(['forward', 'both', 'none']),
+    showArrow: enumOf(['true', 'false']),
+    arrowType: enumOf(['arrow', 'triangle', 'diamond']),
+  },
+  { allowUnknown: true },
+);
 
 export const ThemeSchema = object(
   {
@@ -101,6 +116,7 @@ export const DataSchema = object({
   title: string(),
   desc: string(),
   items: array(itemDatumSchema),
+  relations: array(RelationSchema),
 });
 
 export const TemplateSchema = object(
